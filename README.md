@@ -69,7 +69,7 @@ AttackOps-Lab is a collection of offensive security tools designed for:
 
 Stage	Tool Name	Description	Status
 
-Reconnaissance	🕵️ ReconRaptor	Active/passive recon against targets.	**[Focus: Implement basic port scanning using nmap in Python.]**
+Reconnaissance	🕵️ ReconRaptor	Performs active reconnaissance against targets, including port scanning, OS detection, service version detection, and subdomain enumeration.	✅ Ready to use
 Weaponization	💣 PayloadForge	Create simple trojans (e.g., reverse shell), phishing pages.	[Initial plan: Generate a basic Python reverse shell payload.]
 Command & Control	🎛️ C2Ghost	Simulated C2 server for managing reverse shells.	[Initial plan: Set up a basic listener for incoming connections.]
 
@@ -91,18 +91,18 @@ Actions on Objectives	📂 DataExfilSim	Exfiltrate dummy data to test detection.
 🛠️ Planned Features (Laptop)
 
 ✅ ReconRaptor
-    * **Basic port scanning (Nmap-like)**
-    * DNS subdomain enumeration
-    * WHOIS lookup
-    * Passive OS fingerprinting
+    ✅ Basic port scanning (Nmap-like)
+    ✅ DNS subdomain enumeration
+    ✅ Passive OS fingerprinting (via nmap)
+    ✅ Service version detection (via nmap)
 
 ✅ PayloadForge
-    * **Generate Python-based reverse shells**
+    * Generate Python-based reverse shells
     * Windows/Linux payloads (harmless for simulation)
     * Encode/obfuscate payloads for bypass simulation
 
 ✅ C2Ghost
-    * **Listen for incoming reverse shells**
+    * Listen for incoming reverse shells
     * Issue basic commands (pwd, ls, cat)
     * Store logs of sessions
 
