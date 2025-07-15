@@ -2,31 +2,31 @@
 
 A modular offensive security lab engineered for mastering attack chains and adversarial techniques — designed for ethical research and defensive innovation, **mirroring the structure and intent of DefenseOps-Lab but on the offensive side.**
 
-📍 Author: Sanni Babatunde Idris
-📧 Email: sannifreelancer6779@gmail.com
-🔗 LinkedIn
-🐙 GitHub
+📍 Author: Sanni Babatunde Idris  
+📧 Email: sannifreelancer6779@gmail.com  
+🔗 LinkedIn: [Sanni Idris](https://www.linkedin.com/in/sanni-idris-89917a262/)  
+🐙 GitHub: [Specia-cipher](https://github.com/Specia-cipher)
 
 ---
 
-**Contents**
+## 📑 Table of Contents
 
-1.  [Overview](#overview)
-2.  [Project Objectives](#project-objectives)
-3.  [Laptop-Focused Tools & Modules](#laptop-focused-tools--modules)
-4.  [Phone-Focused Tools & Modules](#phone-focused-tools--modules)
-5.  [Planned Features](#planned-features)
-    * [ReconRaptor](#reconraptor-planned-features)
-    * [PayloadForge](#payloadforge-planned-features)
-    * [C2Ghost](#c2ghost-planned-features)
-    * [PhishCraft](#phishcraft-planned-features)
-    * [ExploitHunter](#exploithunter-planned-features)
-    * [DropperSim](#droppersim-planned-features)
-    * [DataExfilSim](#dataexfilsim-planned-features)
-6.  [Containerization](#containerization)
-7.  [Deployment](#deployment)
-8.  [License](#license)
-9.  [Disclaimer](#disclaimer)
+1. [Overview](#overview)
+2. [Project Objectives](#project-objectives)
+3. [Completed Modules](#completed-modules)
+   * [ReconRaptor](#reconraptor)
+   * [PayloadForge](#payloadforge)
+   * [Listener](#listener)
+4. [Planned Modules](#planned-modules)
+   * [C2Ghost](#c2ghost)
+   * [PhishCraft](#phishcraft)
+   * [ExploitHunter](#exploithunter)
+   * [DropperSim](#droppersim)
+   * [DataExfilSim](#dataexfilsim)
+5. [Containerization](#containerization)
+6. [Deployment](#deployment)
+7. [License](#license)
+8. [Disclaimer](#disclaimer)
 
 ---
 
@@ -34,140 +34,206 @@ A modular offensive security lab engineered for mastering attack chains and adve
 
 AttackOps-Lab is a collection of offensive security tools designed for:
 
-✅ Simulating real-world attack chains.
-✅ Understanding adversarial techniques in a controlled environment.
-✅ Building offensive tools that mirror MITRE ATT&CK and Lockheed Cyber Kill Chain stages.
-✅ Equipping defensive security teams to recognize and counter these attacks.
+✅ Simulating real-world attack chains  
+✅ Understanding adversarial techniques in a controlled environment  
+✅ Building offensive tools that mirror MITRE ATT&CK and Cyber Kill Chain stages  
+✅ Helping defensive security teams recognize and counter attacks  
 
-**This project is intentionally designed to complement DefenseOps-Lab, showcasing a comprehensive understanding of both offensive and defensive security principles.** It is being built with flexibility in mind, **leveraging the resources of both a laptop (during periods of stable power) and a mobile environment (Kali Linux via UserLAnd on phone and Termux) for various stages of development and testing.**
+This project complements **DefenseOps-Lab**, showing mastery of both red and blue team tactics. Development is split between:
 
----
-
-## 🚀 Project Objectives
-
-1.  🎯 Hands-on mastery of offensive security techniques
-2.  🏹 Build a library of modular tools covering Reconnaissance to Impact.
-3.  🛡️ Provide red-teamers and blue-teamers with a controlled sandbox for practicing attack and defense.
-4.  🐳 Offer containerized deployments for isolated, reproducible environments (primarily on laptop).
+💻 Laptop (full containerized stack planned)  
+📱 Mobile (Termux + Kali/Ubuntu on UserLAnd for smaller modules)
 
 ---
 
-## ⚙️ Laptop-Focused Tools & Modules
+## 🎯 Project Objectives
 
-| Stage          | Tool Name        | Description                                                                                                                                                                 | Status                         |
-|----------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| Reconnaissance | 🕵️ ReconRaptor      | Performs active reconnaissance against targets, including port scanning, OS detection, service version detection, and subdomain enumeration.                                | ✅ Ready to use                |
-| Weaponization  | 💣 PayloadForge     | Generates basic Python reverse shells with command execution, Linux persistence (via cron job), and file download capabilities. Requires a separate listener script (`listener.py`) to handle connections. | ✅ Initial functionality complete |
-| Command & Control| 🎛️ C2Ghost         | Simulated C2 server for managing reverse shells.                                                                                                                      | [Initial plan: Basic listener] |
-
----
-
-## 📱 Phone-Focused Tools & Modules
-
-| Stage              | Tool Name      | Description                                                                          |
-|--------------------|----------------|--------------------------------------------------------------------------------------|
-| Delivery           | ✉️ PhishCraft    | Email + link delivery simulator for phishing.                                        |
-| Exploitation       | 🔥 ExploitHunter | Simulate exploitation of common web vulns (SQLi, XSS).                               |
-| Installation       | 🐛 DropperSim    | Basic droppers for persistence testing.                                              |
-| Actions on Objectives| 📂 DataExfilSim| Exfiltrate dummy data to test detection.                                               |
+- Hands-on mastery of offensive techniques  
+- Modular tools for each stage of an attack chain  
+- Sandbox for red-teaming and blue-teaming  
+- Containerized deployments for reproducibility  
+- Cross-platform support where possible  
 
 ---
 
-## 🛠️ Planned Features
+## ✅ Completed Modules
 
-### ✅ ReconRaptor Planned Features
+### 🕵️ ReconRaptor
 
-* ✅ Basic port scanning (Nmap-like)
-* ✅ DNS subdomain enumeration
-* ✅ Passive OS fingerprinting (via nmap)
-* ✅ Service version detection (via nmap)
+Performs active reconnaissance, including:  
 
-### ✅ PayloadForge Planned Features
+- Port scanning (TCP SYN scan)  
+- OS detection and service version detection  
+- Subdomain enumeration with DNS resolver  
 
-* ✅ Generate Python-based reverse shells
-* ✅ Linux persistence (via cron job)
-* ✅ File download capability
-* ☐ Windows persistence mechanisms
-* ☐ File upload capability
+📄 **Usage Example:**
+
+```bash
+python3 recon_raptor.py example.com
+
+📌 Features:
+
+✅ Basic SYN scan
+
+✅ OS fingerprinting
+
+✅ Service version detection
+
+✅ Expanded subdomain list
+
+⬜ Future: Passive recon (whois, Shodan API)
 
 
-### ☐ C2Ghost Planned Features
-
-* ☐ Listen for incoming reverse shells
-* ☐ Issue basic commands (pwd, ls, cat)
-* ☐ Store logs of sessions
-
-### ☐ PhishCraft Planned Features
-
-* ☐ HTML email templates
-* ☐ Fake login pages
-* ☐ Track “victim” clicks and submissions
-
-### ☐ ExploitHunter Planned Features
-
-* ☐ SQL injection scanner for test apps
-* ☐ Basic XSS payload library
-* ☐ Simulated RCE on vulnerable targets
-
-### ☐ DropperSim Planned Features
-
-* ☐ Deploy lightweight persistence mechanisms
-
-### ☐ DataExfilSim Planned Features
-
-* ☐ Simulate stealing sensitive data
-* ☐ Upload to simulated attacker server
 
 ---
 
-## 🐳 Containerization
+💣 PayloadForge
 
-This lab will aim for Docker support, primarily developed and tested on the laptop:
+Generates Python-based reverse shells and persistence mechanisms. Designed to simulate weaponization and initial access.
 
-* 🐳 Each module containerized for isolation.
-* 📦 Docker Compose for spinning up the full attack chain.
-* 📱 Lighter modules might explore Termux-compatible packaging in the future.
+📄 Features:
 
----
+✅ Reverse TCP shell
 
-## 📦 Deployment
+✅ Linux persistence via cron jobs
 
-1.  Clone the repo:
+✅ File download/upload support
 
-    ```bash
-    git clone [https://github.com/Specia-cipher/AttackOps-Lab.git](https://github.com/Specia-cipher/AttackOps-Lab.git)
-    cd AttackOps-Lab
-    ```
+⬜ Future: Windows payloads
 
-2.  Run modules (check the comments in the scripts for environment suitability - laptop or phone):
 
-    ```bash
-    # Example (Laptop):
-    python3 recon_raptor.py google.com
-    python3 payloadforge.py
+📄 Usage Example:
 
-    # Example (Phone - via Termux/UserLAnd):
-    python3 phish_craft.py --template basic_email.html --target victim@example.com
-    ```
+python3 payloadforge.py
 
-3.  Deploy full lab in Docker (Laptop):
+Start the listener first:
 
-    ```bash
-    docker-compose up --build
-    ```
+python3 listener.py
+
 
 ---
 
-## 📜 License
+🎧 Listener
+
+Handles incoming connections from PayloadForge payloads. Supports:
+
+Interactive shell
+
+File download/upload
+
+Session logging (planned)
+
+
+📄 Usage Example:
+
+python3 listener.py
+
+
+---
+
+⬜ Planned Modules
+
+🎛️ C2Ghost
+
+⬜ Centralized C2 server for managing reverse shells
+
+⬜ Issue commands to connected agents
+
+⬜ Log sessions
+
+
+
+---
+
+✉️ PhishCraft
+
+⬜ Email delivery simulator
+
+⬜ Fake login pages
+
+⬜ Track “victim” interactions
+
+
+
+---
+
+🔥 ExploitHunter
+
+⬜ SQLi, XSS, and RCE vulnerability simulation
+
+⬜ Payload library
+
+
+
+---
+
+🐛 DropperSim
+
+⬜ Lightweight droppers for persistence testing
+
+
+
+---
+
+📂 DataExfilSim
+
+⬜ Simulate data exfiltration
+
+
+
+---
+
+🐳 Containerization
+
+AttackOps-Lab aims for containerized deployments (Docker/Podman):
+
+🐳 Each module isolated in its own container
+
+📦 Docker Compose to simulate full attack chains
+
+
+
+---
+
+📦 Deployment
+
+1. Clone the repo:
+
+
+
+git clone https://github.com/Specia-cipher/AttackOps-Lab.git
+cd AttackOps-Lab
+
+2. Run modules:
+
+
+
+# Example:
+python3 recon_raptor.py target.com
+python3 payloadforge.py
+python3 listener.py
+
+3. (Planned) Deploy with Docker:
+
+
+
+docker-compose up --build
+
+
+---
+
+📜 License
 
 MIT License
 
----
-
-## ⚠️ Disclaimer
-
-This project is intended for educational and ethical testing purposes only. Use of these tools for unauthorized activity is strictly prohibited. The author is not responsible for misuse.
 
 ---
 
-🔥 **Mirroring the defensive focus of DefenseOps-Lab, AttackOps-Lab showcases a comprehensive understanding of the cyber battlefield, leveraging both the power of a laptop and the flexibility of a mobile environment.** Let's get to work!
+⚠️ Disclaimer
+
+This project is for educational and ethical use only. Unauthorized usage is prohibited. The author is not liable for misuse.
+
+
+---
+
+🔥 Building AttackOps-Lab is part of mastering adversarial techniques and contributing responsibly to offensive security research.
