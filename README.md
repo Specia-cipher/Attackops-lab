@@ -1,4 +1,3 @@
- text
 # 🗡️ AttackOps-Lab
 
 A modular offensive security lab designed for mastering attack chains and adversarial techniques – the offensive sibling of **DefenseOps-Lab**.
@@ -13,13 +12,13 @@ Where DefenseOps-Lab focused on hardening systems and countering attacks, **Atta
 
 ## 📑 Table of Contents
 
-- 🎯 Overview
-- 🚀 Project Objectives
-- ⚙️ Tools and Modules
-- 🛠️ Features
-- 🐳 Containerization
-- 📦 Deployment
-- 📜 License
+- 🎯 Overview  
+- 🚀 Project Objectives  
+- ⚙️ Tools and Modules  
+- 🛠️ Features  
+- 🐳 Containerization  
+- 📦 Deployment  
+- 📜 License  
 - ⚠️ Disclaimer
 
 ---
@@ -54,8 +53,8 @@ This project runs seamlessly on **Kali Linux**, **WSL2**, and lightweight enviro
 | Weaponization       | 💣 PayloadForge  | Reverse shell payload generator, droppers, and basic persistence. | ✅     |
 | Delivery            | ✉️ PhishCraft    | Phishing simulation with mailer & fake login portals.         | ✅     |
 | Exploitation        | 🔥 ExploitHunter | Automated scanner for SQLi, XSS, and simulated command injection vulnerabilities. | ✅     |
-| Installation        | 🐛 DropperSim     | Deploy persistence mechanisms post-compromise.                | 🔜     |
-| Command & Control   | 🎛️ C2Ghost       | Reverse shell C2 server & client for post-exploitation.        | ✅     |
+| Installation        | 🐛 DropperSim    | Simulate post-compromise persistence mechanisms via cron jobs. | ✅ (cronjob only) 🔜 (systemd planned) |
+| Command & Control   | 🎛️ C2Ghost       | Reverse shell C2 server & client for post-exploitation.         | ✅     |
 | Actions on Objectives| 📂 DataExfilSim  | Simulate data exfiltration of sensitive information.          | 🔜     |
 
 ---
@@ -93,11 +92,13 @@ This project runs seamlessly on **Kali Linux**, **WSL2**, and lightweight enviro
 - Logs all activity both to console with color-coded alerts and to a timestamped persistent log file (`exploit_hunter.log`).  
 - Designed as a modular, extensible proof-of-concept tool illustrating fundamental offensive web scanning techniques for educational use.
 
-### 🔜 DropperSim  
-- Planned deployment of persistence (cron jobs, startup scripts).  
-- Test how attackers maintain access post-compromise.
+### ✅ DropperSim
+- Cron job persistence simulation successfully implemented and tested.  
+- Supports deploying and cleaning persistence jobs safely on Linux targets.  
+- **Systemd service/timer persistence support planned for future releases.**  
+- *Note:* Systemd persistence requires a full systemd user session, which may not be available in lightweight environments like WSL2. BackBox VMs or native Linux with systemd are recommended for testing systemd features.
 
-### 🔜 DataExfilSim  
+### 🔜 DataExfilSim
 - Planned simulation of data exfiltration over HTTP/SFTP.  
 - Dummy sensitive data extraction for blue team training.
 
@@ -154,7 +155,7 @@ text
 docker-compose up --build
 
 text
-(Coming soon)
+*(Coming soon)*
 
 ---
 
@@ -171,3 +172,4 @@ This lab is intended strictly for educational and ethical testing purposes. Unau
 ---
 
 🔥 With AttackOps-Lab you don’t just study attacks… you build them, test them, and learn how to stop them.
+
