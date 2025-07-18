@@ -1,4 +1,4 @@
-# 🗡️ AttackOps-Lab
+🗡️ AttackOps-Lab
 
 A modular offensive security lab designed for mastering attack chains and adversarial techniques – the offensive sibling of **DefenseOps-Lab**.
 
@@ -55,7 +55,7 @@ This project runs seamlessly on **Kali Linux**, **WSL2**, and lightweight enviro
 | Exploitation        | 🔥 ExploitHunter | Automated scanner for SQLi, XSS, and simulated command injection vulnerabilities. | ✅     |
 | Installation        | 🐛 DropperSim    | Simulate post-compromise persistence mechanisms via cron jobs. | ✅ (cronjob only) 🔜 (systemd planned) |
 | Command & Control   | 🎛️ C2Ghost       | Reverse shell C2 server & client for post-exploitation.         | ✅     |
-| Actions on Objectives| 📂 DataExfilSim  | Simulate data exfiltration of sensitive information.          | 🔜     |
+| Actions on Objectives| 📂 DataExfilSim  | Simulate data exfiltration of sensitive information over HTTP and SFTP protocols. | ✅     |
 
 ---
 
@@ -98,9 +98,15 @@ This project runs seamlessly on **Kali Linux**, **WSL2**, and lightweight enviro
 - **Systemd service/timer persistence support planned for future releases.**  
 - *Note:* Systemd persistence requires a full systemd user session, which may not be available in lightweight environments like WSL2. BackBox VMs or native Linux with systemd are recommended for testing systemd features.
 
-### 🔜 DataExfilSim
-- Planned simulation of data exfiltration over HTTP/SFTP.  
-- Dummy sensitive data extraction for blue team training.
+### ✅ DataExfilSim  
+- Simulates data exfiltration of dummy sensitive data over **HTTP** and **SFTP** protocols.  
+- **HTTP exfiltration** tested successfully with configurable intervals and counts; sends data to target URLs using POST requests.  
+- **SFTP exfiltration** tested end-to-end with a secure, chrooted SFTP server user; supports uploading dummy files to specified remote directories with password authentication.  
+- Uses Python’s Paramiko library for SFTP connectivity, with robust session and authentication handling.  
+- Logs each exfiltration attempt with status for monitoring success/failure.  
+- Deprecation warnings on some cryptography algorithms may appear due to underlying libraries but do not affect functionality.  
+- Configurable exfiltration intervals and repeat counts for realistic simulation pacing.  
+- Designed to integrate into wider offensive toolchains and red team training scenarios.  
 
 ---
 
@@ -119,42 +125,30 @@ For now, scripts run natively on Linux and Termux.
 ## 📦 Deployment
 
 ### Clone the repo:
-git clone https://github.com/Specia-cipher/AttackOps-Lab.git
+git clone https://github.com/Specia-cipher/AttackOps-Lab.git  
 cd AttackOps-Lab
 
-text
-
 ### Run a module:
-python3 recon_raptor.py <target>
-python3 payloadforge.py
-python3 c2ghost_listener.py
-python3 c2ghost_client.py
-PHISH_TEMPLATE=gmail python3 phishcraft_tracker.py
-python3 phishcraft_mailer.py --to victim@example.com
+python3 recon_raptor.py <target>  
+python3 payloadforge.py  
+python3 c2ghost_listener.py  
+python3 c2ghost_client.py  
+PHISH_TEMPLATE=gmail python3 phishcraft_tracker.py  
+python3 phishcraft_mailer.py --to victim@example.com  
 python3 exploit_hunter.py http://targetsite.com
 
-text
-
 ### ExploitHunter Example Usage:
-Run full scan (SQLi, XSS, Command Injection enabled):
-python3 exploit_hunter.py http://example.com
+Run full scan (SQLi, XSS, Command Injection enabled):  
+`python3 exploit_hunter.py http://example.com`
 
-text
+Skip command injection scan:  
+`python3 exploit_hunter.py http://example.com --no-cmd`
 
-Skip command injection scan:
-python3 exploit_hunter.py http://example.com --no-cmd
-
-text
-
-Save JSON report:
-python3 exploit_hunter.py http://example.com --json results.json
-
-text
+Save JSON report:  
+`python3 exploit_hunter.py http://example.com --json results.json`
 
 ### Planned full lab launch:
-docker-compose up --build
-
-text
+`docker-compose up --build`  
 *(Coming soon)*
 
 ---
@@ -171,5 +165,4 @@ This lab is intended strictly for educational and ethical testing purposes. Unau
 
 ---
 
-🔥 With AttackOps-Lab you don’t just study attacks… you build them, test them, and learn how to stop them.
-
+🔥 With AttackOps-Lab you don’t just study attacks… you build them, test them, and learn how to stop
